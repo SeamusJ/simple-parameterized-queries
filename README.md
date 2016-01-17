@@ -10,7 +10,7 @@ This class is written in JScript, Microsoft's ECMA Script 3 implementation for C
 
 ###Usage
 
-To use the class, include Database.asp:
+To use the class, include Database.js:
 
 ```
 <script language="javascript" runat="server" src="simple-parameterized-queries\Database.js"></script>
