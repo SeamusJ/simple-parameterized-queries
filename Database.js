@@ -7,32 +7,28 @@ var Database = (function() {
 	var adParamInput = 1;
     var ObjectCreator = GetObjectCreator();
 	
-	return function(connectionString) {
-		function __db(connectionString) {
-			this.ConnectionString = connectionString;
-		}
-		
-		__db.prototype.Query = function(sql) {
-			var queryParameters = getQueryParameters(arguments);
-			var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
-			return createRecordSet(command, true);
-		}
-		
-		__db.prototype.CreateUpdatableRecordSet = function(sql) {
-			var queryParameters = getQueryParameters(arguments);
-			var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
-			return createRecordSet(command, false);
-		}
-		
-		__db.prototype.ExecSql = function(sql){
-			var queryParameters = getQueryParameters(arguments);
-			var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
-			return command.Execute();
-		}
-		
-		return new __db(connectionString);
-	}
-	
+    function __db(connectionString) {
+        this.ConnectionString = connectionString;
+    }
+    
+    __db.prototype.Query = function(sql) {
+        var queryParameters = getQueryParameters(arguments);
+        var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
+        return createRecordSet(command, true);
+    }
+    
+    __db.prototype.CreateUpdatableRecordSet = function(sql) {
+        var queryParameters = getQueryParameters(arguments);
+        var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
+        return createRecordSet(command, false);
+    }
+    
+    __db.prototype.ExecSql = function(sql){
+        var queryParameters = getQueryParameters(arguments);
+        var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
+        return command.Execute();
+    }
+
 	function getQueryParameters(args) {
 		var parameters = new Array();
 		
@@ -85,4 +81,8 @@ var Database = (function() {
             return WScript;
         }
     }
+    
+    return function(connectionString) {
+		return new __db(connectionString);
+	}
 })();
