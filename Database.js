@@ -1,4 +1,3 @@
-<script language="javascript" runat="server">
 function Database(connectionString) {
 	var adOpenForwardOnly = 0;
 	var adOpenStatic = 3;
@@ -76,4 +75,3 @@ function Database(connectionString) {
 	
 	return new __db(connectionString);
 }
-</script>
