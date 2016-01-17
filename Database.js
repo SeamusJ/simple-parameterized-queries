@@ -1,4 +1,4 @@
-function Database(connectionString) {
+var Database = (function() {
 	var adOpenForwardOnly = 0;
 	var adOpenStatic = 3;
 	var adLockReadOnly = 1;
@@ -6,26 +6,30 @@ function Database(connectionString) {
 	var adVarChar = 200;
 	var adParamInput = 1;
 	
-	function __db(connectionString) {
-		this.ConnectionString = connectionString;
-	}
-	
-	__db.prototype.Query = function(sql) {
-		var queryParameters = getQueryParameters(arguments);
-		var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
-		return createRecordSet(command, true);
-	}
-	
-	__db.prototype.CreateUpdatableRecordSet = function(sql) {
-		var queryParameters = getQueryParameters(arguments);
-		var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
-		return createRecordSet(command, false);
-	}
-	
-	__db.prototype.ExecSql = function(sql){
-		var queryParameters = getQueryParameters(arguments);
-		var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
-		return command.Execute();
+	return function(connectionString) {
+		function __db(connectionString) {
+			this.ConnectionString = connectionString;
+		}
+		
+		__db.prototype.Query = function(sql) {
+			var queryParameters = getQueryParameters(arguments);
+			var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
+			return createRecordSet(command, true);
+		}
+		
+		__db.prototype.CreateUpdatableRecordSet = function(sql) {
+			var queryParameters = getQueryParameters(arguments);
+			var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
+			return createRecordSet(command, false);
+		}
+		
+		__db.prototype.ExecSql = function(sql){
+			var queryParameters = getQueryParameters(arguments);
+			var command = createAdodbCommand(sql, queryParameters, this.ConnectionString);
+			return command.Execute();
+		}
+		
+		return new __db(connectionString);
 	}
 	
 	function getQueryParameters(args) {
@@ -72,6 +76,4 @@ function Database(connectionString) {
 			recordSet.LockType = adLockOptimistic;
 		}
 	}
-	
-	return new __db(connectionString);
-}
+})();
