@@ -10,10 +10,19 @@ This class is written in JScript, Microsoft's ECMA Script 3 implementation for C
 
 ###Usage
 
-To use the class, include Database.js:
+To use the class in Classic ASP, include Database.js:
 
 ```
 <script language="javascript" runat="server" src="simple-parameterized-queries\Database.js"></script>
+```
+
+To use the class in a Windows Script, create a Windows Script File:
+
+```
+<job id="your job name here">
+   <script language="javascript" src="simple-parameterized-queries/Database.js"/>
+   <script language="VBScript" src="yourVbScript.vbs"/>
+</job>
 ```
 
 Create an instance of the class:
