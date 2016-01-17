@@ -5,6 +5,7 @@ var Database = (function() {
 	var adLockOptimistic = 3;
 	var adVarChar = 200;
 	var adParamInput = 1;
+    var ObjectCreator = GetObjectCreator();
 	
 	return function(connectionString) {
 		function __db(connectionString) {
@@ -43,7 +44,7 @@ var Database = (function() {
 	}
 	
 	function createAdodbCommand(sql, parameters, connectionString){
-		var queryCommand = Server.CreateObject('ADODB.Command');
+		var queryCommand = ObjectCreator.CreateObject('ADODB.Command');
 		queryCommand.ActiveConnection = connectionString;
 		queryCommand.CommandText = sql;
 		
@@ -61,7 +62,7 @@ var Database = (function() {
 	}
 
 	function createRecordSet(command, readOnly) {
-		var recordSet = Server.CreateObject('ADODB.Recordset');
+		var recordSet = ObjectCreator.CreateObject('ADODB.Recordset');
 		configureCursorAndLockType(recordSet, readOnly);
 		recordSet.Open(command);
 		return recordSet;
@@ -76,4 +77,12 @@ var Database = (function() {
 			recordSet.LockType = adLockOptimistic;
 		}
 	}
+    
+    function GetObjectCreator() {
+        if(typeof(Server) === 'object') {
+            return Server;
+        }else{
+            return WScript;
+        }
+    }
 })();
