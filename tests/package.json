@@ -1,0 +1,14 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "Unit tests",
+  "main": "test.spec.js",
+  "scripts": {
+    "test": "node node_modules\\jasmine-node\\bin\\jasmine-node test.spec.js"
+  },
+  "author": "Seamus Johnson",
+  "license": "MIT",
+  "dependencies": {
+    "jasmine-node": "^1.14.5"
+  }
+}
