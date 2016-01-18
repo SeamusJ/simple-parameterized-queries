@@ -5,7 +5,7 @@ var Database = (function() {
 	var adLockOptimistic = 3;
 	var adVarChar = 200;
 	var adParamInput = 1;
-    var ObjectCreator = GetObjectCreator();
+    var ObjectCreator = getObjectCreator();
 	
     function __db(connectionString) {
         this.ConnectionString = connectionString;
@@ -74,15 +74,26 @@ var Database = (function() {
 		}
 	}
     
-    function GetObjectCreator() {
+    function getObjectCreator() {
         if(typeof(Server) === 'object') {
             return Server;
-        }else{
+        }else if(typeof(WScript) === 'object') {
             return WScript;
+        }else{
+            return null;
         }
     }
     
-    return function(connectionString) {
-		return new __db(connectionString);
-	}
+    function createDatabase(connectionString, objectCreator) {
+        if(objectCreator) {
+            ObjectCreator = objectCreator;
+        }
+        return new __db(connectionString);
+    }
+    
+    if (typeof(exports) === 'object') {
+        exports.Database = createDatabase;
+    }
+    
+    return createDatabase;
 })();
